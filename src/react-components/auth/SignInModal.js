@@ -81,10 +81,15 @@ export function SubmitEmail({ onSubmitEmail, initialEmail, privacyUrl, termsUrl,
   const intl = useIntl();
 
   const [email, setEmail] = useState(initialEmail);
+  const [isValidEmail, setIsValidEmail] = useState(false);
 
   const onSubmitForm = useCallback(
     e => {
       e.preventDefault();
+      console.log(isValidEmail);
+      if (!isValidEmail) {
+        return;
+      }
       onSubmitEmail(email);
     },
     [onSubmitEmail, email]
@@ -93,9 +98,29 @@ export function SubmitEmail({ onSubmitEmail, initialEmail, privacyUrl, termsUrl,
   const onChangeEmail = useCallback(
     e => {
       setEmail(e.target.value);
+      console.log(e.target.value, email);
     },
     [setEmail]
   );
+  function checkEricssonEmail(email) {
+    setEmail(email);
+    var checkContains = false;
+    if (
+      email.includes("@ericsson.com") ||
+      email.includes("@est.tech") ||
+      email.includes("@fitec.org.br") ||
+      email.includes("@cienet.com") ||
+      email.includes("@expology.se") ||
+      email.includes("@aroundthecorner.se") ||
+      email.includes("@iemcal.com")
+    ) {
+      checkContains = true;
+    } else {
+      checkContains = false;
+    }
+
+    setIsValidEmail(checkContains);
+  }
 
   return (
     <Column center padding as="form" onSubmit={onSubmitForm}>
@@ -110,16 +135,22 @@ export function SubmitEmail({ onSubmitEmail, initialEmail, privacyUrl, termsUrl,
         name="email"
         type="email"
         required
-        value={email}
-        onChange={onChangeEmail}
-        placeholder="example@example.com"
+        // value={email}
+        onChange={e => {
+          checkEricssonEmail(e.target.value);
+          // onChangeEmail
+        }}
+        placeholder="xyz@ericsson.com"
       />
       <p>
+        {isValidEmail === false ? "Please enter company Email" : null}
+        <br />
         <small>
           <LegalMessage termsUrl={termsUrl} privacyUrl={privacyUrl} />
         </small>
       </p>
-      <NextButton type="submit" />
+      {/* {isValidEmail ? <NextButton type="submit" /> : null} */}
+      {isValidEmail ? <NextButton type="submit" /> : null}
     </Column>
   );
 }
