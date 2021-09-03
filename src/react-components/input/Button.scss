@@ -254,6 +254,32 @@
   }
 }
 
+
+:local(.accent6) {
+  color: theme.$text5-color;
+  background-color: theme.$accent6-color;
+
+  svg {
+    *[stroke=\#000] {
+      stroke: theme.$text5-color;
+    }
+
+    *[fill=\#000] {
+      fill: theme.$text5-color;
+    }
+  }
+
+  &:hover {
+    color: theme.$text5-color-hover;
+    background-color: theme.$accent6-color-hover;
+  }
+
+  &:active {
+    color: theme.$text5-color-pressed;
+    background-color: theme.$accent6-color-pressed;
+  }
+}
+
 :local(.button):disabled {
   border-color: transparent;
   cursor: not-allowed;
@@ -285,4 +311,38 @@
 
 :local(.xl) {
   height: 64px;
+}
+
+:local(.thin) {
+  min-height: 41px;
+  height: 41px;
+  &:hover {
+    color: theme.$text5-color-hover;
+  }
+}
+
+:local(.thick) {
+  height: 53px;
+}
+
+:local(.signin) {
+  border: 2px solid #007AB8;
+  background-color: transparent;
+  color: #007AB8;
+  box-sizing: border-box;
+  border-radius: 13px;
+}
+
+:local(.landing) {
+  border: 2px solid #007AB8;
+  background-color: #007AB8; 
+  color: theme.$text5-color;
+  box-sizing: border-box;
+  border-radius: 13px;
+  &:hover {
+    background-color: #008bd1;
+  }
+  &:active {
+    background-color: #00699E;
+  }
 }
