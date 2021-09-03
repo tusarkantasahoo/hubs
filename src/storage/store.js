@@ -246,9 +246,9 @@ export default class Store extends EventTarget {
 
     // Temporary fix for distorted audio in Safari.
     // See https://github.com/mozilla/hubs/issues/4411
-    if (isSafari()) {
-      this.update({ preferences: { audioOutputMode: "audio" } });
-    }
+    // if (isSafari()) {
+    //   this.update({ preferences: { audioOutputMode: "audio" } });
+    // }
 
     this._shouldResetAvatarOnInit = false;
 
