@@ -30,8 +30,9 @@ export function HomePage() {
   const sortedPublicRooms = Array.from(publicRooms).sort((a, b) => b.member_count - a.member_count);
   const wrapInBold = chunk => <b>{chunk}</b>;
   const isHmc = configs.feature("show_cloud");
+  const qs = new URLSearchParams(location.search);
   useEffect(() => {
-    const qs = new URLSearchParams(location.search);
+    // const qs = new URLSearchParams(location.search);
 
     // Support legacy sign in urls.
     if (qs.has("sign_in")) {
@@ -119,28 +120,34 @@ export function HomePage() {
           </Column>
         </Container>
       )}
-      {sortedPublicRooms.length > 0 && (
-        <Container className={styles.roomsContainer}>
-          <h3 className={styles.roomsHeading}>
-            <FormattedMessage id="home-page.public--rooms" defaultMessage="Public Rooms" />
-          </h3>
-          <Column grow padding className={styles.rooms}>
-            <MediaGrid center>
-              {sortedPublicRooms.map(room => {
-                return (
-                  <MediaTile
-                    key={room.id}
-                    entry={room}
-                    processThumbnailUrl={(entry, width, height) =>
-                      scaledThumbnailUrlFor(entry.images.preview.url, width, height)
-                    }
-                  />
-                );
-              })}
-            </MediaGrid>
-          </Column>
-        </Container>
-      )}
+
+      {auth.isSignedIn == true ? (
+        <>
+          {sortedPublicRooms.length > 0 && (
+            <Container className={styles.roomsContainer}>
+              <h3 className={styles.roomsHeading}>
+                <FormattedMessage id="home-page.public--rooms" defaultMessage="Public Rooms" />
+              </h3>
+              <Column grow padding className={styles.rooms}>
+                <MediaGrid center>
+                  {sortedPublicRooms.map(room => {
+                    return (
+                      <MediaTile
+                        key={room.id}
+                        entry={room}
+                        processThumbnailUrl={(entry, width, height) =>
+                          scaledThumbnailUrlFor(entry.images.preview.url, width, height)
+                        }
+                      />
+                    );
+                  })}
+                </MediaGrid>
+              </Column>
+            </Container>
+          )}
+        </>
+      ) : null}
+
       {sortedFavoriteRooms.length > 0 && (
         <Container className={styles.roomsContainer}>
           <h3 className={styles.roomsHeading}>
@@ -163,6 +170,7 @@ export function HomePage() {
           </Column>
         </Container>
       )}
+
       <Container>
         <Column center grow>
           <Button thin preset="landing" as="a" href="/link">
