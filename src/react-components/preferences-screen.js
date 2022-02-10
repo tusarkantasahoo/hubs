@@ -574,6 +574,7 @@ class PreferenceListItem extends Component {
     const indent = this.props.itemProps.disableIfTrue || this.props.itemProps.disableIfFalse;
 
     if (isCheckbox) {
+      console.log("Checkbox----", this.props);
       return (
         <ListItem disabled={disabled} indent={indent}>
           <div className={styles.row}>
@@ -1088,7 +1089,11 @@ class PreferencesScreen extends Component {
           { key: "disableAutoPixelRatio", prefType: PREFERENCE_LIST_ITEM_TYPE.CHECK_BOX, defaultBool: false },
           { key: "allowMultipleHubsInstances", prefType: PREFERENCE_LIST_ITEM_TYPE.CHECK_BOX, defaultBool: false },
           { key: "disableIdleDetection", prefType: PREFERENCE_LIST_ITEM_TYPE.CHECK_BOX, defaultBool: false },
-          { key: "fastRoomSwitching", prefType: PREFERENCE_LIST_ITEM_TYPE.CHECK_BOX, defaultBool: true },
+          {
+            key: "fastRoomSwitching",
+            prefType: PREFERENCE_LIST_ITEM_TYPE.CHECK_BOX,
+            defaultBool: true
+          },
           { key: "preferMobileObjectInfoPanel", prefType: PREFERENCE_LIST_ITEM_TYPE.CHECK_BOX, defaultBool: false },
           { key: "animateWaypointTransitions", prefType: PREFERENCE_LIST_ITEM_TYPE.CHECK_BOX, defaultBool: true },
           { key: "showFPSCounter", prefType: PREFERENCE_LIST_ITEM_TYPE.CHECK_BOX, defaultBool: false },

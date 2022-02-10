@@ -57,15 +57,23 @@ AFRAME.registerComponent("open-media-button", {
         this.el.sceneEl.emit("scene_media_selected", this.src);
       } else if ((hubId = await isHubsRoomUrl(this.src))) {
         const url = new URL(this.src);
+        console.log("URL ", url);
+        console.log("Hub ", window.APP.hub);
+        console.log("Hubs URL", isLocalHubsUrl(this.src));
+
+        console.log("Hub fast room switching ", APP.store.state.preferences.fastRoomSwitching);
         if (url.hash && window.APP.hub.hub_id === hubId) {
           // move to waypoint w/o writing to history
           window.history.replaceState(null, null, window.location.href.split("#")[0] + url.hash);
+        } else if (APP.store.state.preferences.fastRoomSwitching === false) {
+          await exitImmersive();
+          location.href = this.src;
         } else if (APP.store.state.preferences.fastRoomSwitching && isLocalHubsUrl(this.src)) {
           // move to new room without page load or entry flow
           changeHub(hubId);
         } else {
-          await exitImmersive();
-          location.href = this.src;
+          // move to new room without page load or entry flow
+          changeHub(hubId);
         }
       } else {
         await exitImmersive();
